@@ -1,0 +1,11 @@
+# Secrets - never commit these
+cloudflared/credentials*.json
+*.pem
+*.key
+id_*
+authorized_keys
+
+# Cache
+.zcompdump*
+*.zwc
+.DS_Store

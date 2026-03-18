@@ -1,0 +1,161 @@
+# 簡潔但完整 - 明亮配色
+format = """
+$username\
+$hostname\
+$shell\
+$directory\
+$git_branch\
+$git_status\
+$python\
+$conda\
+$nodejs\
+$golang\
+$rust\
+$fill\
+$cmd_duration\
+$line_break\
+$character"""
+
+add_newline = false
+command_timeout = 500  # Add timeout to prevent hanging
+
+# Username - 只在 SSH 或 root 時顯示
+[username]
+style_user = 'bold bright-yellow'
+style_root = 'bold bright-red'
+format = '[aws-prod]($style)'
+disabled = false
+show_always = true  # 總是顯示自定義名稱
+
+# Hostname - 總是顯示
+[hostname]
+ssh_only = false
+format = '❤️[tokyo](bold bright-green) '
+disabled = false
+ssh_symbol = ""  # 不需要 SSH 符號
+
+# Shell 指示器 - 知道在哪個 shell（必要！）
+[shell]
+disabled = false
+bash_indicator = "🐚"
+fish_indicator = "🐠"
+zsh_indicator = "⚡"
+nu_indicator = "🦀"
+format = '[$indicator](bold bright-cyan) '
+
+# 目錄 - 只顯示當前目錄名稱
+[directory]
+style = 'bold bright-blue'
+format = '[$path](bold bright-blue) '
+truncation_length = 3  # 顯示 3 層路徑
+truncation_symbol = '.../'  # 省略符號
+truncate_to_repo = false  # 不從 repo 根目錄開始
+home_symbol = '~'
+read_only = " 🔒"
+
+# Git 分支
+[git_branch]
+style = 'bold bright-purple'
+symbol = ''
+format = 'on [$symbol $branch]($style) '
+
+# Git 狀態 - 必要的狀態指示
+[git_status]
+style = 'bold bright-yellow'
+format = '([$all_status$ahead_behind]($style) )'
+conflicted = "="
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕"
+up_to_date = "✓"
+untracked = "?${count}"
+stashed = "$"
+modified = "!${count}"
+staged = "+${count}"
+renamed = "»"
+deleted = "✘${count}"
+
+# Python + 虛擬環境（必要！）
+[python]
+style = 'bold bright-yellow'
+symbol = '🐍'
+format = '[$symbol${pyenv_prefix}( $version)( \([$virtualenv](bold bright-cyan)\))]($style) '
+detect_extensions = ["py"]
+detect_files = ["requirements.txt", "pyproject.toml", ".python-version", "setup.py", "Pipfile"]
+python_binary = ["python", "python3"]
+
+# Conda 環境（如果有）
+[conda]
+style = 'bold bright-green'
+symbol = '🅒'
+format = '[$symbol $environment]($style) '
+ignore_base = false  # 顯示 base 環境
+
+# Node.js
+[nodejs]
+style = 'bold bright-green'
+symbol = '⬢'
+format = '[$symbol $version]($style) '
+detect_extensions = ["js", "ts"]
+detect_files = ["package.json"]
+
+# Go
+[golang]
+style = 'bold bright-cyan'
+symbol = '🐹'
+format = '[$symbol $version]($style) '
+detect_extensions = ["go"]
+detect_files = ["go.mod"]
+
+# Rust
+[rust]
+style = 'bold bright-red'
+symbol = '🦀'
+format = '[$symbol $version]($style) '
+detect_extensions = ["rs"]
+detect_files = ["Cargo.toml"]
+
+# Fill - 推到右側
+[fill]
+symbol = ' '
+
+# 命令執行時間（必要 - 知道命令跑多久）
+[cmd_duration]
+min_time = 2_000
+style = 'bold bright-yellow'
+format = '⏱ [$duration]($style)'
+
+# 命令提示符
+[character]
+success_symbol = '[❯](bold bright-green)'
+error_symbol = '[✗](bold bright-red)'
+vimcmd_symbol = '[N](bold yellow) [❯](bold bright-green)'
+vimcmd_visual_symbol = '[V](bold yellow) [❯](bold bright-green)'
+vimcmd_replace_one_symbol = '[R](bold yellow) [❯](bold bright-green)'
+
+# 背景工作（必要！）
+[jobs]
+symbol = '⚙'
+style = 'bold bright-blue'
+number_threshold = 1
+format = '[$symbol$number]($style) '
+
+# 錯誤狀態（必要 - 知道命令是否失敗）
+[status]
+disabled = false
+style = 'bold bright-red'
+format = '[$symbol$status]($style) '
+symbol = '✘'
+success_symbol = ''
+not_executable_symbol = '🚫'
+not_found_symbol = '🔍'
+
+# 電池（筆電必要）
+[battery]
+full_symbol = ''
+charging_symbol = '⚡'
+discharging_symbol = '💀'
+
+[[battery.display]]
+threshold = 20
+style = 'bold bright-red'

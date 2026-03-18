@@ -1,0 +1,11 @@
+tunnel: my-pc
+credentials-file: /mnt/c/Users/user/.cloudflared/392c6f38-1dcc-4a77-a17e-ddc74ad59136.json
+
+ingress:
+  - hostname: ssh.yuudemo.com
+    service: ssh://localhost:22
+
+  - hostname: rdp.yuudemo.com
+    service: rdp://10.255.255.254:3389
+
+  - service: http_status:404
