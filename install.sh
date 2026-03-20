@@ -133,6 +133,29 @@ install_sesh() {
 }
 
 # ============================================
+# 安裝 Nushell
+# ============================================
+install_nushell() {
+    if ! command -v nu &>/dev/null; then
+        info "安裝 Nushell..."
+        local arch
+        arch=$(dpkg --print-architecture 2>/dev/null || echo "amd64")
+        local nu_version="0.111.0"
+        if [ "$arch" = "amd64" ]; then
+            local nu_arch="x86_64-unknown-linux-gnu"
+        else
+            local nu_arch="aarch64-unknown-linux-gnu"
+        fi
+        curl -sLO "https://github.com/nushell/nushell/releases/download/${nu_version}/nu-${nu_version}-${nu_arch}.tar.gz"
+        sudo tar -xzf "nu-${nu_version}-${nu_arch}.tar.gz" -C /usr/local/bin --strip-components=1 "nu-${nu_version}-${nu_arch}/nu"
+        rm -f "nu-${nu_version}-${nu_arch}.tar.gz"
+        success "Nushell ${nu_version} 安裝完成"
+    else
+        success "Nushell 已存在: $(nu --version)"
+    fi
+}
+
+# ============================================
 # 安裝 Neovim
 # ============================================
 install_neovim() {
@@ -288,6 +311,7 @@ main() {
     install_nvm
     install_go
     install_starship
+    install_nushell
     install_neovim
     install_sesh
     install_tpm
